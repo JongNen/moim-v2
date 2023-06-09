@@ -1,0 +1,23 @@
+{{> /common/header }}
+<div class="pb-3 border-bottom">
+	<span class="fs-4">#모임 <small>함께하면 더 즐겁다</small></span>
+</div>
+<form class="my-2 p-2" method="post" action="/user/login">
+
+	{{#error }}
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		로그인에 실패하였습니다. 아이디 혹은 비밀번호가 일치하지 않습니다.
+		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{{/error }}
+	<div class="mb-1">
+		<label class="form-label">사용자 아이디</label> <input type="text"
+			class="form-control" name="loginId" />
+	</div>
+	<div class="mb-1">
+		<label class="form-label">사용자 비밀번호</label> <input type="password"
+			class="form-control" name="loginPass" />
+	</div>
+	<button type="submit" class="btn btn-primary">로그인</button>
+</form>
+{{> /common/footer }}

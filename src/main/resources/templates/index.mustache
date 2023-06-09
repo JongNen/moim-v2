@@ -1,0 +1,19 @@
+{{> /common/header }}
+<div class="container">
+  <form action="/search">
+    <div>
+      <p>사용자 검색</p>
+      <input type="text" name="data" style="width: 30%" placeholder="아이디 또는 닉네임을 입력해주세요" required autocomplete="off" >
+      <button type="submit" class="btn btn-success" style="margin: 10px 10px">검색</button>
+    </div>
+  </form>
+</div>
+{{ > /common/footer }}
+
+<script>
+  document.querySelector('input[name="data"]').addEventListener('keydown', function(event) {
+    if (event.code === 'Space') {
+      event.preventDefault(); // 띄어쓰기 입력 방지
+    }
+  });
+</script>

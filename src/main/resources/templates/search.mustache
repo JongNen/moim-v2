@@ -1,0 +1,76 @@
+{{> /common/header }}
+<div class="pb-3 border-bottom">
+	<span class="fs-4"># 함께하면 더 즐겁다</span>
+</div>
+<div class="container">
+
+	<p>
+		{{#data}}<b>"{{.}}" </b>검색 결과입니다. {{#searchData}}총 <b>{{.}}</b>
+		건{{/searchData}}{{/data}}
+	<p>{{#search}}
+	<ul>
+
+		{{#avatarUrl }}
+		<img src="{{.}}" style="width: 48px" class="me-2" /> {{/avatarUrl }}
+		{{^avatarUrl }}
+		<i class="bi bi-person-square me-2 fs-1 px-1"></i> {{/avatarUrl }}
+		<b>{{nick}}</b>
+		<small>@{{id}}</small> 
+		{{#login}}
+		<span class="mx-2 btn"> 
+		{{#followed }} <i class="follow bi bi-heart-fill text-danger" data-user-id="{{id}}"
+			data-status="follow"></i> 
+			{{/followed }} 
+			{{^followed }} 
+			<i class="follow bi bi-heart text-danger" data-user-id="{{id}}"
+			data-status="not-follow"></i> 
+			{{/followed }}
+		</span> 
+		{{/login}}
+		</li>
+	</ul>
+	{{/search}} {{^search}}
+	<p>해당 조건에 맞는 사용자가 없습니다.</p>
+	{{/search}}
+
+</div>
+<ul class="pagination pagination-sm justify-content-end mt-3">
+	{{#pages}}
+	<li class="page-item"><a class="page-link"
+		href="/search?data={{#data}}{{.}}{{/data}}&page={{.}}">{{.}}</a></li>
+
+	{{/pages}}
+</ul>
+
+<script>
+	document.querySelectorAll(".follow").forEach( elm => {
+		elm.onclick = (evt)=> {
+			// window.alert(evt.target.dataset.userId);
+			if(elm.dataset.status==="not-follow") {
+				const xhr = new XMLHttpRequest();
+				xhr.open("post","/api/follow", false);
+				// post는 body가 있는 요청. body에 담긴 내용의 종류를 설정해야 됨.
+				xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+				xhr.send("target=" +evt.target.dataset.userId );	// post는 send안에 body 설정을 해야 함.
+				const response = JSON.parse(xhr.responseText);
+				if(response.result) {
+					evt.target.classList.remove("bi-heart");
+					evt.target.classList.add("bi-heart-fill");
+					evt.target.dataset.status="follow";
+				}
+			}else {
+				const xhr = new XMLHttpRequest();
+				xhr.open("delete","/api/follow?target="+evt.target.dataset.userId, false);
+				xhr.send();
+				const response = JSON.parse(xhr.responseText);
+				if(response.result) {
+					evt.target.classList.remove("bi-heart-fill");
+					evt.target.classList.add("bi-heart");
+					evt.target.dataset.status="not-follow";
+				}
+			}
+		};
+	});
+	
+</script>
+{{ > /common/footer }}
