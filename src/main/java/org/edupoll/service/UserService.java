@@ -8,6 +8,8 @@ import org.edupoll.model.entity.UserDetail;
 import org.edupoll.repository.UserDetailRepository;
 import org.edupoll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,8 +40,13 @@ public class UserService {
 
 	// 회원 가입
 	public boolean createNewUser(User user) {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		if (userRepository.findById(user.getId()).isEmpty()) {
 			// user.setJoinDate(new Date());
+			String encodedPass = "{bcrypt}"+encoder.encode(user.getPass());
+			user.setPass(encodedPass);
+			user.setAuthority("ROLE_NORMAL");
+			
 			userRepository.save(user);
 
 			return true;
