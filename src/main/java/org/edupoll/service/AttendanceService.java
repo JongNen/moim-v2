@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.edupoll.model.dto.AttendanceJoinResponseData;
+import org.edupoll.model.dto.response.AttendanceJoinResponseData;
 import org.edupoll.model.entity.Attendance;
 import org.edupoll.model.entity.Moim;
 import org.edupoll.model.entity.User;

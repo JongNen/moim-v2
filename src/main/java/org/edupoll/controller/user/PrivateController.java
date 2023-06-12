@@ -1,10 +1,12 @@
 package org.edupoll.controller.user;
 
 import org.edupoll.model.entity.UserDetail;
+import org.edupoll.security.support.Account;
 import org.edupoll.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +22,14 @@ public class PrivateController {
 	UserService userService;
 	
 	@GetMapping("/private")
-	public String showPrivateInfoView(@SessionAttribute String logonId, Model model) {
-		model.addAttribute("user", userService.findSpecificUserById(logonId));
+	public String showPrivateInfoView(@AuthenticationPrincipal Account account, Model model) {
+		model.addAttribute("user", userService.findSpecificUserById(account.getUsername()));
 		return "private/default";
 	}
 	
 	@GetMapping("/private/modify")
-	public String showPrivateModifyForm(@SessionAttribute String logonId, Model model) {
-		UserDetail savedDetail = userService.findSpecificSavedDetail(logonId);
+	public String showPrivateModifyForm(@AuthenticationPrincipal Account account, Model model) {
+		UserDetail savedDetail = userService.findSpecificSavedDetail(account.getUsername());
 		model.addAttribute("savedDetail", savedDetail);
 		
 		return "private/modify-form";
@@ -35,8 +37,8 @@ public class PrivateController {
 	}
 	
 	@PostMapping("/private/modify")
-	public String privateModifyHandle(@SessionAttribute String logonId, UserDetail detail, Model model) {
-		boolean rst = userService.modifySpecificUserDetail(logonId, detail);
+	public String privateModifyHandle(@AuthenticationPrincipal Account account, UserDetail detail, Model model) {
+		boolean rst = userService.modifySpecificUserDetail(account.getUsername(), detail);
 		logger.debug("privateModifyHandle.. {}", rst);
 		return "redirect:/private/modify";
 	}

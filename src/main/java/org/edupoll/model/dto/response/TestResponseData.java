@@ -1,4 +1,4 @@
-package org.edupoll.model.dto;
+package org.edupoll.model.dto.response;
 
 public class TestResponseData {
 	int code;

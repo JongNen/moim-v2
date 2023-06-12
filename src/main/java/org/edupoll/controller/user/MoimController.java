@@ -3,15 +3,16 @@ package org.edupoll.controller.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.edupoll.model.dto.AddReplyRequestData;
+import org.edupoll.model.dto.request.AddReplyRequestData;
 import org.edupoll.model.entity.Moim;
-import org.edupoll.model.entity.Reply;
+import org.edupoll.security.support.Account;
 import org.edupoll.service.AttendanceService;
 import org.edupoll.service.MoimService;
 import org.edupoll.service.ReplyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,17 +53,17 @@ public class MoimController {
 	}
 
 	@PostMapping("/moim/create")
-	public String moimCreateHandle(Moim moim, @SessionAttribute String logonId) {
-		String createdId = moimService.createNewMoim(moim, logonId);
+	public String moimCreateHandle(Moim moim, @AuthenticationPrincipal Account account) {
+		String createdId = moimService.createNewMoim(moim, account.getUsername());
 		logger.debug("moimCreateHandle result id = {}", createdId);
 		return "redirect:/moim/view?id=" + createdId;
 	}
 
 	@GetMapping("/moim/view")
-	public String showMoimDetail(@SessionAttribute String logonId ,String id, @RequestParam(defaultValue = "1") int p, Model model) {
+	public String showMoimDetail(@AuthenticationPrincipal Account account ,String id, @RequestParam(defaultValue = "1") int p, Model model) {
 		model.addAttribute("moim", moimService.getSpecificMoimById(id));
 		//model.addAttribute("replys", replyService.getReplysByMoimId(id, p));
-		model.addAttribute("isJoined", attendanceService.isExistsAttendance(logonId, id));
+		model.addAttribute("isJoined", attendanceService.isExistsAttendance(account.getUsername(), id));
 		return "moim/view";
 	}
 

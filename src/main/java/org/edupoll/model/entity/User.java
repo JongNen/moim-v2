@@ -23,6 +23,8 @@ public class User {
 	String pass;
 	String nick;
 	Date joinDate;
+	
+	String authority;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userDetailIdx") // User Entity 의 필드
@@ -133,6 +135,14 @@ public class User {
 				+ userDetail + "]";
 	}
 	// toString
+
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 }
 
 /*

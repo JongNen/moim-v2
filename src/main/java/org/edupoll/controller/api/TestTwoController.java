@@ -1,6 +1,6 @@
 package org.edupoll.controller.api;
 
-import org.edupoll.model.dto.TestResponseData;
+import org.edupoll.model.dto.response.TestResponseData;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

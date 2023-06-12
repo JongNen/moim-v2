@@ -2,7 +2,7 @@ package org.edupoll.service;
 
 import java.util.Optional;
 
-import org.edupoll.model.dto.LoginRequestData;
+import org.edupoll.model.dto.request.LoginRequestData;
 import org.edupoll.model.entity.User;
 import org.edupoll.model.entity.UserDetail;
 import org.edupoll.repository.UserDetailRepository;

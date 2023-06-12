@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.edupoll.model.dto.UserResponseData;
+import org.edupoll.model.dto.response.UserResponseData;
 import org.edupoll.model.entity.User;
 import org.edupoll.repository.FollowRepository;
 import org.edupoll.repository.UserRepository;
@@ -41,6 +41,7 @@ public class SearchService {
 		Pageable page = PageRequest.of(pageNo - 1, 10);
 		List<User> list = userRepository.findByIdContainingOrNickContainingAllIgnoreCase(data, data, page);
 		List<UserResponseData> responseList = list.stream().map(t-> new UserResponseData(t)).toList();
+		
 		
 		for(UserResponseData urd : responseList) {
 			if(followRepository.existsByOwnerIdIsAndTargetIdIs(logonId, urd.getId())) {

@@ -3,9 +3,11 @@ package org.edupoll.controller.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.edupoll.model.dto.UserResponseData;
+import org.edupoll.model.dto.response.UserResponseData;
+import org.edupoll.security.support.Account;
 import org.edupoll.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,8 @@ public class SearchController {
 
 	@GetMapping("/search")
 	public String seachUserHandle(String data, Model model, @RequestParam(defaultValue = "1") int page,
-			@SessionAttribute(required = false) String logonId) {
-		List<UserResponseData> found = searchService.findBySearchUser(data, logonId, page);
+			@AuthenticationPrincipal Account account) {
+		List<UserResponseData> found = searchService.findBySearchUser(data, account.getUsername(), page);
 		model.addAttribute("search", found);
 		model.addAttribute("data", data);
 		List<String> pages = new ArrayList<>();
@@ -31,8 +33,8 @@ public class SearchController {
 			pages.add(String.valueOf(i));
 		}
 		model.addAttribute("pages", pages);
-		if (logonId != null)
-			model.addAttribute("login", logonId);
+		if (account.getUsername() != null)
+			model.addAttribute("login", account.getUsername());
 		return "search";
 	}
 

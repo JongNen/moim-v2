@@ -2,7 +2,7 @@ package org.edupoll.service;
 
 import java.util.List;
 
-import org.edupoll.model.dto.AddReplyRequestData;
+import org.edupoll.model.dto.request.AddReplyRequestData;
 import org.edupoll.model.entity.Reply;
 import org.edupoll.repository.MoimRepository;
 import org.edupoll.repository.ReplyRepository;

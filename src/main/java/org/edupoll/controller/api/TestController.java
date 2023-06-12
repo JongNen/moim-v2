@@ -1,6 +1,6 @@
 package org.edupoll.controller.api;
 
-import org.edupoll.model.dto.TestResponseData;
+import org.edupoll.model.dto.response.TestResponseData;
 import org.edupoll.model.entity.User;
 import org.edupoll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
