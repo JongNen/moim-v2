@@ -32,7 +32,7 @@ public class UserController {
 			return "redirect:/user/login?loginId=" + user.getId();
 		} else {
 			model.addAttribute("error", true);
-			return "user/join";
+			return "index";
 		}
 	}
 
