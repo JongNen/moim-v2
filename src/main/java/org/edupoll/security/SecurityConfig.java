@@ -19,7 +19,11 @@ public class SecurityConfig {
 
 		// httpSecurity.formLogin(Customizer.withDefaults());
 		httpSecurity
-				.formLogin(t -> t.loginPage("/user/login").usernameParameter("loginId").passwordParameter("loginPass"));
+				.formLogin(t -> t
+						.loginPage("/user/login")
+						.usernameParameter("loginId")
+						.passwordParameter("loginPass")
+						.defaultSuccessUrl("/", true));
 
 		return httpSecurity.build();
 	}

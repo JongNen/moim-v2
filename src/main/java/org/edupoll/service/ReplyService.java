@@ -22,7 +22,6 @@ public class ReplyService {
 	public void createNewReplay(AddReplyRequestData data) {
 		Reply reply = new Reply();
 		reply.setMoim(moimRepository.findById(data.getMoimId()).get());
-		reply.setPassword(data.getPassword());
 		reply.setText(data.getText());
 
 		replyRepository.save(reply);

@@ -53,9 +53,14 @@ public class MoimController {
 	}
 
 	@PostMapping("/moim/create")
-	public String moimCreateHandle(Moim moim, @AuthenticationPrincipal Account account) {
+	public String moimCreateHandle(Moim moim, @AuthenticationPrincipal Account account, Model model) {
+		if(moim.getMaxPerson() == null) {
+			model.addAttribute("error", true);
+			return "moim/create";
+			
+		}
 		String createdId = moimService.createNewMoim(moim, account.getUsername());
-		logger.debug("moimCreateHandle result id = {}", createdId);
+		
 		return "redirect:/moim/view?id=" + createdId;
 	}
 

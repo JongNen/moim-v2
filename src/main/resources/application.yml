@@ -6,21 +6,17 @@ logging :
   
 # Spring Configuration  
 spring :
+  profiles :
+    active : mysql
   mustache :
     servlet:
       expose-session-attributes : true
   jackson :
     default-property-inclusion : NON_NULL
-  datasource :
-    url : jdbc:oracle:thin:@3.34.136.30:1521:xe
-    username : moim
-    password : 1q2w3e4r
-    driver-class-name : oracle.jdbc.driver.OracleDriver
   mvc :
     format :
       date : yyyy-MM-dd
-  jpa :
-    show-sql : true
+  
 
     
 server :

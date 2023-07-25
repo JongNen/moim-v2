@@ -26,6 +26,7 @@ public class MoimService {
 //		
 //		User user = new User();
 //		user.setId(logonId);
+		
 
 		moim.setManager(user);
 		moim.setCurrentPerson(1);

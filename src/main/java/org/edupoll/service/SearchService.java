@@ -20,7 +20,7 @@ public class SearchService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	FollowRepository followRepository;
 
@@ -35,21 +35,43 @@ public class SearchService {
 	 * 
 	 * return foundUsers; }
 	 */
+	
+	
+
+	/*
+	 * @Transactional public List<UserResponseData> findBySearchUser(String data,
+	 * String logonId, int pageNo) {
+	 * 
+	 * Pageable page = PageRequest.of(pageNo - 1, 10); List<User> list =
+	 * userRepository.findByIdContainingOrNickContainingAllIgnoreCase(data, data,
+	 * page); List<UserResponseData> responseList = list.stream().map(t-> new
+	 * UserResponseData(t)).toList();
+	 * 
+	 * 
+	 * for(UserResponseData urd : responseList) {
+	 * if(followRepository.existsByOwnerIdIsAndTargetIdIs(logonId, urd.getId())) {
+	 * urd.setFollowed(true); } } return responseList;
+	 * 
+	 * }
+	 */
+
 	@Transactional
 	public List<UserResponseData> findBySearchUser(String data, String logonId, int pageNo) {
-		
 		Pageable page = PageRequest.of(pageNo - 1, 10);
 		List<User> list = userRepository.findByIdContainingOrNickContainingAllIgnoreCase(data, data, page);
-		List<UserResponseData> responseList = list.stream().map(t-> new UserResponseData(t)).toList();
-		
-		
-		for(UserResponseData urd : responseList) {
-			if(followRepository.existsByOwnerIdIsAndTargetIdIs(logonId, urd.getId())) {
-				urd.setFollowed(true);
+		List<UserResponseData> responseList = new ArrayList<>();
+
+		for (User user : list) {
+			if (!user.getId().equals(logonId)) { // 본인이 아닌 경우에만 추가
+				UserResponseData responseData = new UserResponseData(user);
+				if (followRepository.existsByOwnerIdIsAndTargetIdIs(logonId, user.getId())) {
+					responseData.setFollowed(true);
+				}
+				responseList.add(responseData);
 			}
 		}
+
 		return responseList;
-		
 	}
 
 	public long countList(String data) {

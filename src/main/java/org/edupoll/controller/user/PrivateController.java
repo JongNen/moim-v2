@@ -1,6 +1,7 @@
 package org.edupoll.controller.user;
 
 import org.edupoll.model.entity.UserDetail;
+import org.edupoll.repository.AvatarRepository;
 import org.edupoll.security.support.Account;
 import org.edupoll.service.UserService;
 import org.slf4j.Logger;
@@ -21,6 +22,9 @@ public class PrivateController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	AvatarRepository avatarRepository;
+	
 	@GetMapping("/private")
 	public String showPrivateInfoView(@AuthenticationPrincipal Account account, Model model) {
 		model.addAttribute("user", userService.findSpecificUserById(account.getUsername()));
@@ -29,8 +33,10 @@ public class PrivateController {
 	
 	@GetMapping("/private/modify")
 	public String showPrivateModifyForm(@AuthenticationPrincipal Account account, Model model) {
+		
 		UserDetail savedDetail = userService.findSpecificSavedDetail(account.getUsername());
 		model.addAttribute("savedDetail", savedDetail);
+		model.addAttribute("avatar", avatarRepository.findAll());
 		
 		return "private/modify-form";
 		

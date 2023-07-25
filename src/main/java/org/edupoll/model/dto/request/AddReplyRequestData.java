@@ -2,7 +2,6 @@ package org.edupoll.model.dto.request;
 
 public class AddReplyRequestData {
 	String moimId;
-	String password;
 	String text;
 
 	public String getMoimId() {
@@ -13,13 +12,6 @@ public class AddReplyRequestData {
 		this.moimId = moimId;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public String getText() {
 		return text;

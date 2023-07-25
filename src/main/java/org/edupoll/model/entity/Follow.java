@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class Follow {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 
 	@ManyToOne(fetch = FetchType.LAZY)

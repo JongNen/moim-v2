@@ -14,11 +14,10 @@ import jakarta.persistence.Table;
 public class Reply {
 	// 필드 설정 // 어노테이션 설정
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 
 	String text;
-	String password;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "moimId")
@@ -39,14 +38,6 @@ public class Reply {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Moim getMoim() {

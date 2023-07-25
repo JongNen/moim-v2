@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Table(name = "attendances")
 public class Attendance {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -1,60 +1,65 @@
 {{> /common/header }}
-	<div class="py-2 border-bottom">
-		<span class="fs-5"># 상세 정보 수정</span>
+<div class="py-2 border-bottom">
+	<span class="fs-5"># 상세 정보 수정</span>
+</div>
+{{#error }}
+<div class="alert alert-warning alert-dismissible" role="alert">
+	사용자 등록에 실패하였습니다. 이미 사용중이거나 일시 장애일 수 있습니다.
+	<button type="button" class="btn-close" data-bs-dismiss="alert"
+		aria-label="Close"></button>
+</div>
+{{/error }}
+<form class="my-2 p-2" method="post" action="/private/modify">
+	<div class="mb-1 text-center">
+		{{#savedDetail.avatar }} <img src="{{url}}" style="max-width: 25%"
+			class="rounded img-thumbnail" alt="..."> {{/savedDetail.avatar
+		}} {{^savedDetail.avatar }} <img src="" style="max-width: 50%"
+			class="rounded img-thumbnail" alt="..."> {{/savedDetail.avatar
+		}}
 	</div>
-	{{#error }}
-	<div class="alert alert-warning alert-dismissible" role="alert">
-		사용자 등록에 실패하였습니다. 이미 사용중이거나 일시 장애일 수 있습니다.
-		<button type="button" class="btn-close" data-bs-dismiss="alert"
-			aria-label="Close"></button>
+	<div style="margin-bottom: 30px;"></div>
+	<!-- 간격을 두기 위한 div 요소 -->
+	<label class="form-label">아바타</label>
+	<div class="mb-3"
+		style="display: flex; flex-direction: row; align-items: center;">
+		{{#avatar}}
+		<div class="form-check" style="margin-right: 30px;">
+			<input class="form-check-input" type="radio" name="avatar.id"
+				id="{{id}}" value="{{id}}"> <label class="form-check-label"
+				for="{{id}}"> <img src="{{url}}" style="max-width: 60%">
+			</label>
+		</div>
+		{{/avatar}}
 	</div>
-	{{/error }}
-	<form class="my-2 p-2" method="post" action="/private/modify">
-		<div class="mb-1 text-center">
-			{{#savedDetail.avatar }}
-			<img src="{{url}}" style="max-width: 50%"
-				class="rounded img-thumbnail" alt="...">
-			{{/savedDetail.avatar }}
-			{{^savedDetail.avatar }}
-			<img src="" style="max-width: 50%"
-				class="rounded img-thumbnail" alt="...">
-			{{/savedDetail.avatar }} 
-		</div>
-		<div class="mb-1 text-secondary">
-			<label class="form-label ">아바타</label> <input type="text"
-				class="form-control" name="avatar.Id"
-				value="{{#savedDetail.avatarId}}{{.}}{{/savedDetail.avatarId}}" />
-		</div>
-		<div class="mb-1 text-secondary">
-			<label class="form-label ">자기소개</label>
-			<textarea class="form-control" name="description">{{#savedDetail.description}}{{.}}{{/savedDetail.description}}</textarea>
-		</div>
-		<div class="mb-1 text-secondary">
-			<label class="form-label ">주소</label> <input type="text"
-				class="form-control" name="address"
-				value="{{#savedDetail.address}}{{.}}{{/savedDetail.address}}" />
-		</div>
-		<div class="mb-4 text-secondary">
-			<label class="form-label ">생일</label> <input type="date"
-				class="form-control" name="birthday" />
-		</div>
-		<div class="d-flex justify-content-between">
-			<button type="submit" class="btn btn-warning">정보 수정</button>
-			<button type="button" class="btn btn-danger" id="del-bt">회원
-				탈퇴</button>
-			<a href="/user/delete"  class="btn btn-success" id="del-link">회원 탈퇴</a>
-		</div>
-	</form>
+<div class="mb-1 text-secondary">
+	<label class="form-label ">자기소개</label>
+	<textarea class="form-control" name="description">{{#savedDetail.description}}{{.}}{{/savedDetail.description}}</textarea>
+</div>
+<div class="mb-1 text-secondary">
+	<label class="form-label ">주소</label> <input type="text"
+		class="form-control" name="address"
+		value="{{#savedDetail.address}}{{.}}{{/savedDetail.address}}" />
+</div>
+<div class="mb-4 text-secondary">
+	<label class="form-label ">생일</label> <input type="date"
+		class="form-control" name="birthday" />
+</div>
+<div class="d-flex justify-content-between">
+	<button type="submit" class="btn btn-warning">정보 수정</button>
+
+	<a href="/user/delete" class="btn btn-success" id="del-link">회원 탈퇴</a>
+</div>
+</form>
 <script>
 	document.querySelector("#del-link").onclick = function(evt) {
 		if (!confirm("회원 탈퇴를 진행하시겠습니까?\n탈퇴 진행시 데이터는 모두 삭제되어 복구할 수 없습니다.")) {
 			evt.preventDefault();
 		}
 	};
-	
+
 	document.querySelector("#del-bt").onclick = function(evt) {
 		if (confirm("회원 탈퇴를 진행하시겠습니까?\n탈퇴 진행시 데이터는 모두 삭제되어 복구할 수 없습니다.")) {
-			location.href="/user/delete";
+			location.href = "/user/delete";
 		}
 	};
 </script>

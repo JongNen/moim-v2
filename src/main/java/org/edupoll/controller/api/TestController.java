@@ -26,7 +26,7 @@ public class TestController {
 	@ResponseBody
 	public String testAHandle() throws JsonProcessingException {
 		
-		String[] ar = new String[] {"saio", "sadako", "goku"};
+		String[] ar = new String[] {"saito", "sadako", "goku"};
 		String jsonStr = objectMapper.writeValueAsString(ar);
 		
 		System.out.println(jsonStr);

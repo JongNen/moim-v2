@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -37,9 +38,15 @@ public class UserController {
 	}
 
 	@GetMapping("/user/login")
-	public String showUserLoginForm() {
-		return "user/login";
+	public String showUserLoginForm(@RequestParam(required = false) String error, Model model) {
+	    if (error != null) {
+	        model.addAttribute("error", true);
+	    }
+	    return "user/login";
 	}
+
+
+
 
 	/*
 	 * @PostMapping("/user/login") public String userLoginHandle(LoginRequestData
